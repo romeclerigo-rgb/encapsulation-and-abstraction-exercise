@@ -66,8 +66,8 @@ public class Validation {
             if (plate.isEmpty()) {
                 System.out.println("Plate Number cannot be empty.");
             }
-            else if (!plate.matches("[A-Z0-9]{4,10}")) {
-                System.out.println("Plate Number must be 4 to 10 alphanumeric characters.");
+            else if (!plate.matches("(?=.*\\d)(?=.*[A-Z])[A-Z0-9]{4,10}")) {
+                System.out.println("Plate Number must be 4 to 10 characters and contain at least 1 number and 1 letter.");
             }
             else if (isDuplicatePlate(vehicles, plate)) {
                 System.out.println("Plate Number already exists.");
