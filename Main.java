@@ -61,26 +61,33 @@ public class Main {
             break;
         }
 
-        System.out.println("\n======================================================================================");
-        System.out.printf("%-12s %-15s %-20s %-15s %-12s%n",
-                "Plate No.", "Type", "Model", "Base Rate", "Status");
-        System.out.println("======================================================================================");
+        System.out.println("\n==============================================================================================================");
+        System.out.printf("%-12s %-15s %-20s %-18s %-15s %-12s%n",
+                "Plate No.", "Type", "Model", "Details", "Base Rate", "Status");
+        System.out.println("==============================================================================================================");
 
         for (Vehicle vehicle : vehicles) {
 
-            String status;
+            String status = vehicle.isAvailable() ? "Available" : "Rented";
 
-            if (vehicle.isAvailable()) {
-                status = "Available";
-            } else {
-                status = "Rented";
+            String details = "";
+
+            if (vehicle instanceof Car) {
+                details = String.format("%d Seats", ((Car) vehicle).getSeats());
+            }
+            else if (vehicle instanceof Motorcycle) {
+                details = String.format("%,d cc", ((Motorcycle) vehicle).getCC());
+            }
+            else if (vehicle instanceof Van) {
+                details = String.format("%,d kg", ((Van) vehicle).getCargoCapacity());
             }
 
-            System.out.printf("%-12s %-15s %-20s PhP%,-14.2f %-12s%n",
-                vehicle.getPlateNumber(),
-                vehicle.getVehicleType(),
-                vehicle.getModel(),
-                vehicle.getBaseRate(),
+            System.out.printf("%-12s %-15s %-20s %-18s %-15s %-12s%n",
+                    vehicle.getPlateNumber(),
+                    vehicle.getVehicleType(),
+                    vehicle.getModel(),
+                    details,
+                    String.format("PhP%,.2f", vehicle.getBaseRate()),
                     status);
         }
 
