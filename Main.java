@@ -36,17 +36,17 @@ public class Main {
         switch (vehicleChoice) {
 
             case 1:
-                int seats = validation.getPositiveInteger(sc, "Enter Number of Seats: ");
+                int seats = validation.getCarSeats(sc);
                 vehicles.add(new Car(plate, model, rate, seats));
                 break;
 
             case 2:
-                int engineDisplacement = validation.getPositiveInteger(sc, "Enter Engine Displacement (cc): ");
+                int engineDisplacement = validation.getEngineCC(sc);
                 vehicles.add(new Motorcycle(plate, model, rate, engineDisplacement));
                 break;
 
             case 3:
-                int cargoCapacity = validation.getPositiveInteger(sc, "Enter Cargo Capacity (kg): ");
+                int cargoCapacity = validation.getCargoCapacity(sc);
                 vehicles.add(new Van(plate, model, rate, cargoCapacity));
                 break;
         }
@@ -76,11 +76,11 @@ public class Main {
                 status = "Rented";
             }
 
-            System.out.printf("%-12s %-15s %-20s PhP%-14.2f %-12s%n",
-                    vehicle.getPlateNumber(),
-                    vehicle.getVehicleType(),
-                    vehicle.getModel(),
-                    vehicle.getBaseRate(),
+            System.out.printf("%-12s %-15s %-20s PhP%,-14.2f %-12s%n",
+                vehicle.getPlateNumber(),
+                vehicle.getVehicleType(),
+                vehicle.getModel(),
+                vehicle.getBaseRate(),
                     status);
         }
 
@@ -112,33 +112,27 @@ public class Main {
                 int days = validation.getPositiveInteger(sc, "Enter Number of Rental Days: ");
                 
                 double subtotal = vehicle.getBaseRate() * days;
-
-                double driverFee = 0;
-
-                if (vehicle instanceof Van) {
-                    driverFee = 500;
-                }
-
-                double total = subtotal + driverFee;
+                double total = vehicle.calculateRentalCost(days);
+                double driverFee = total - subtotal;
 
                 System.out.println("\n========== RENTAL SUMMARY ==========");
                 System.out.println("Plate Number : " + vehicle.getPlateNumber());
                 System.out.println("Vehicle Type : " + vehicle.getVehicleType());
                 System.out.println("Model        : " + vehicle.getModel());
 
-                System.out.printf("Base Rate    : PhP%.2f%n", vehicle.getBaseRate());
+                System.out.printf("Base Rate    : PhP%,.2f%n", vehicle.getBaseRate());
                 System.out.println("Rental Days  : " + days);
 
                 System.out.println("------------------------------------");
 
-                System.out.printf("Rental Cost  : PhP%.2f%n", subtotal);
+                System.out.printf("Rental Cost  : PhP%,.2f%n", subtotal);
 
                 if (driverFee > 0) {
-                    System.out.printf("Driver Fee   : PhP%.2f%n", driverFee);
+                    System.out.printf("Driver Fee   : PhP%,.2f%n", driverFee);
                 }
 
                 System.out.println("------------------------------------");
-                System.out.printf("TOTAL        : PhP%.2f%n", total);
+                System.out.printf("TOTAL        : PhP%,.2f%n", total);
                 System.out.println("====================================");
 
                 char confirm = validation.getConfirmation(sc);

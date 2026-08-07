@@ -3,9 +3,7 @@ import java.util.Scanner;
 
 public class Validation {
 
-    // ==========================
-    // Main Menu Choice
-    // ==========================
+
     public int getMenuChoice(Scanner sc) {
 
         boolean valid = false;
@@ -27,9 +25,7 @@ public class Validation {
         return choice;
     }
 
-    // ==========================
-    // Vehicle Type Choice
-    // ==========================
+
     public int getVehicleChoice(Scanner sc) {
 
         boolean valid = false;
@@ -56,9 +52,7 @@ public class Validation {
         return choice;
     }
 
-    // ==========================
-    // Plate Number
-    // ==========================
+   
     public String getPlateNumber(Scanner sc, ArrayList<Vehicle> vehicles) {
 
         boolean valid = false;
@@ -72,8 +66,8 @@ public class Validation {
             if (plate.isEmpty()) {
                 System.out.println("Plate Number cannot be empty.");
             }
-            else if (!plate.matches("[A-Z0-9]+")) {
-                System.out.println("Plate Number must contain letters and numbers only.");
+            else if (!plate.matches("[A-Z0-9]{4,10}")) {
+                System.out.println("Plate Number must be 4 to 10 alphanumeric characters.");
             }
             else if (isDuplicatePlate(vehicles, plate)) {
                 System.out.println("Plate Number already exists.");
@@ -86,9 +80,7 @@ public class Validation {
         return plate;
     }
 
-    // ==========================
-    // Model
-    // ==========================
+   
     public String getModel(Scanner sc) {
 
         boolean valid = false;
@@ -110,9 +102,6 @@ public class Validation {
         return model;
     }
 
-    // ==========================
-    // Positive Integer
-    // ==========================
     public int getPositiveInteger(Scanner sc, String message) {
 
         boolean valid = false;
@@ -135,9 +124,7 @@ public class Validation {
         return number;
     }
 
-    // ==========================
-    // Positive Double
-    // ==========================
+
     public double getPositiveDouble(Scanner sc, String message) {
 
         boolean valid = false;
@@ -168,9 +155,6 @@ public class Validation {
         return number;
     }
 
-    // ==========================
-    // Duplicate Plate Checker
-    // ==========================
     public boolean isDuplicatePlate(ArrayList<Vehicle> vehicles, String plate) {
 
         for (Vehicle vehicle : vehicles) {
@@ -183,20 +167,101 @@ public class Validation {
 
         return false;
     }
+
     public char getConfirmation(Scanner sc) {
 
-    while (true) {
+        boolean valid = false;
+        char answer = ' ';
 
-        System.out.print("Confirm Rental? (Y/N): ");
+        while (!valid) {
 
-        String input = sc.nextLine().trim().toUpperCase();
+            System.out.print("Confirm Rental? (Y/N): ");
+            String input = sc.nextLine().trim().toUpperCase();
 
-        if (input.equals("Y") || input.equals("N")) {
-            return input.charAt(0);
+            if (input.matches("[YN]")) {
+                answer = input.charAt(0);
+                valid = true;
+            } else {
+                System.out.println("Invalid input. Please enter Y or N.");
+            }
         }
 
-        System.out.println("Invalid input.");
+        return answer;
     }
-}
+    
+    public int getCarSeats(Scanner sc) {
+
+            boolean valid = false;
+            int seats = 0;
+
+            while (!valid) {
+
+                System.out.print("Enter Number of Seats (1-8): ");
+                String input = sc.nextLine();
+
+                if (input.matches("[1-8]")) {
+                    seats = Integer.parseInt(input);
+                    valid = true;
+                } else {
+                    System.out.println("A car must have 1 to 8 seats.");
+                }
+            }
+
+            return seats;
+        }
+    public int getEngineCC(Scanner sc) {
+
+    boolean valid = false;
+    int cc = 0;
+
+    while (!valid) {
+
+        System.out.print("Enter Engine Displacement (50-2000 cc): ");
+        String input = sc.nextLine();
+
+        if (input.matches("\\d+")) {
+
+            cc = Integer.parseInt(input);
+
+            if (cc >= 50 && cc <= 2000) {
+                valid = true;
+            } else {
+                System.out.println("Engine displacement must be between 50 and 2000 cc.");
+            }
+
+        } else {
+            System.out.println("Invalid input. Please enter numbers only.");
+            }
+        }
+
+        return cc;
+    }
+        public int getCargoCapacity(Scanner sc) {
+
+        boolean valid = false;
+        int capacity = 0;
+
+        while (!valid) {
+
+            System.out.print("Enter Cargo Capacity (1-5000 kg): ");
+            String input = sc.nextLine();
+
+            if (input.matches("\\d+")) {
+
+                capacity = Integer.parseInt(input);
+
+                if (capacity >= 1 && capacity <= 5000) {
+                    valid = true;
+                } else {
+                    System.out.println("Cargo capacity must be between 1 and 5000 kg.");
+                }
+
+            } else {
+                System.out.println("Invalid input. Please enter numbers only.");
+            }
+        }
+
+            return capacity;
+        }
 
 }
